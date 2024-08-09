@@ -83,29 +83,30 @@ const App = () => {
     );
   }
   function Menu() {
+    // let pizza = pizzaData;
     return (
       <main className="menu">
         <h2>Our Menu</h2>
-        {pizzaData.length > 0 && (
+        {pizzaData.length > 0 ? (
           <ul className="pizzas">
             {pizzaData.map((pizza) => (
               <Pizza pizzaObj={pizza} key={pizza.name} />
             ))}
           </ul>
-        )}
+        ): <p>We're still working on our menu. Please come back later :)</p>}
       </main>
     );
   }
 
-  function Pizza(props) {
+  function Pizza({pizzaObj}) {
     return (
-      <li className={`pizza ${props.pizzaObj.soldOut && "sold-out"}`}>
-        <img src={props.pizzaObj.photoUrl} alt={props.pizzaObj.name} />
+      <li className={`pizza ${pizzaObj.soldOut && "sold-out"}`}>
+        <img src={pizzaObj.photoUrl} alt={pizzaObj.name} />
         <div>
-          <h3>{props.pizzaObj.name}</h3>
-          <p>{props.pizzaObj.ingredients}</p>
+          <h3>{pizzaObj.name}</h3>
+          <p>{pizzaObj.ingredients}</p>
           <span>
-            {props.pizzaObj.soldOut ? "SOLD OUT" : props.pizzaObj.price}
+            {pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price}
           </span>
         </div>
       </li>
@@ -140,15 +141,21 @@ const App = () => {
     }, []);
     return (
       <footer className="footer">
-        <div className="order">
-          {currentTime.toLocaleTimeString()} We are currently{" "}
-          {isOpen
-            ? `open till ${closeHour}:00. Come visit us or order online.`
-            : "closed"}
-          !<button className="btn">order</button>
-        </div>
+      <Order isOpen={isOpen} currentTime={currentTime} closeHour={closeHour} openHour={openHour} />
       </footer>
     );
+  }
+
+  function Order({currentTime, isOpen, closeHour, openHour}){
+    return(
+      <div className="order">
+      {currentTime.toLocaleTimeString()} We are currently{" "}
+      {isOpen
+        ? `open till ${closeHour}:00. Come visit us or order online.`
+        : `closed till ${openHour}:00`}
+      !<button className="btn">order</button>
+    </div>
+    )
   }
 };
 
