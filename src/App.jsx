@@ -8,7 +8,7 @@ import TodoList from "./components/TodoList";
 import NotificationManager from "./components/NotificationManager";
 import { auth, db } from "../utils/firebase/firebase";
 import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
-import './index.css';
+import "./index.css";
 
 const App = () => {
   // const [todos, setTodos] = useState([]);
@@ -74,21 +74,10 @@ const App = () => {
     // </Routes>
   );
 
-  function Pizza() {
-    return (
-      <>
-        <img src="./assets/funghi.jpg" alt="some text" />
-        <h3>Focaccia</h3>
-        <p>Bread with italian olive oil and rosemary</p>
-      </>
-    );
-  }
   function Header() {
     return (
       <header className="header">
-        <h1>
-          Fast Pizza and Pepperoni co.
-        </h1>
+        <h1>Fast Pizza and Pepperoni co.</h1>
       </header>
     );
   }
@@ -96,12 +85,33 @@ const App = () => {
     return (
       <main className="menu">
         <h2>Our Menu</h2>
-        <Pizza />
+        <Pizza
+          name="Pizza Margherita"
+          ingredients="Tomato and mozarella"
+          price={10}
+          photoUrl="assets/margherita.jpg"
+          soldOut={false}
+        />
         <Pizza />
         <Pizza />
       </main>
     );
   }
+
+  function Pizza(props) {
+    console.log(props);
+    return (
+      <div className="pizza">
+        <img src={props.photoUrl} alt={props.name} />
+        <div>
+          <h3>{props.name}</h3>
+          <p>{props.ingredients}</p>
+          <span>{props.price}</span>
+        </div>
+      </div>
+    );
+  }
+
   function Footer() {
     const [currentTime, setCurrentTime] = useState(new Date());
     const [isOpen, setIsOpen] = useState(false);
