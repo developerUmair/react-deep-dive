@@ -9,6 +9,7 @@ import NotificationManager from "./components/NotificationManager";
 import { auth, db } from "../utils/firebase/firebase";
 import { collection, query, where, orderBy, getDocs } from "firebase/firestore";
 import "./index.css";
+import { pizzaData } from "./data/data";
 
 const App = () => {
   // const [todos, setTodos] = useState([]);
@@ -85,30 +86,29 @@ const App = () => {
     return (
       <main className="menu">
         <h2>Our Menu</h2>
-        <Pizza
-          name="Pizza Margherita"
-          ingredients="Tomato and mozarella"
-          price={10}
-          photoUrl="assets/margherita.jpg"
-          soldOut={false}
-        />
-        <Pizza />
-        <Pizza />
+        {pizzaData.length > 0 && (
+          <ul className="pizzas">
+            {pizzaData.map((pizza) => (
+              <Pizza pizzaObj={pizza} key={pizza.name} />
+            ))}
+          </ul>
+        )}
       </main>
     );
   }
 
   function Pizza(props) {
-    console.log(props);
     return (
-      <div className="pizza">
-        <img src={props.photoUrl} alt={props.name} />
+      <li className={`pizza ${props.pizzaObj.soldOut && "sold-out"}`}>
+        <img src={props.pizzaObj.photoUrl} alt={props.pizzaObj.name} />
         <div>
-          <h3>{props.name}</h3>
-          <p>{props.ingredients}</p>
-          <span>{props.price}</span>
+          <h3>{props.pizzaObj.name}</h3>
+          <p>{props.pizzaObj.ingredients}</p>
+          <span>
+            {props.pizzaObj.soldOut ? "SOLD OUT" : props.pizzaObj.price}
+          </span>
         </div>
-      </div>
+      </li>
     );
   }
 
@@ -140,8 +140,13 @@ const App = () => {
     }, []);
     return (
       <footer className="footer">
-        {currentTime.toLocaleTimeString()} We are currently{" "}
-        {isOpen ? "open" : "close"}!
+        <div className="order">
+          {currentTime.toLocaleTimeString()} We are currently{" "}
+          {isOpen
+            ? `open till ${closeHour}:00. Come visit us or order online.`
+            : "closed"}
+          !<button className="btn">order</button>
+        </div>
       </footer>
     );
   }
