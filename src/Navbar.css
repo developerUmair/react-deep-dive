@@ -2,7 +2,7 @@
 .navbar {
     display: flex;
     justify-content: center;
-    background-color: #333;
+    background-color: #f8d490;
     padding: 10px 0;
     margin-bottom: 20px;
   }
@@ -24,6 +24,7 @@
     font-size: 16px;
     text-transform: uppercase;
     transition: background-color 0.3s, color 0.3s;
+    text-decoration: none;
   }
   
   /* Hover effect */

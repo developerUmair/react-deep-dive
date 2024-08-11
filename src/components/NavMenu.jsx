@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../Navbar.css';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 const NavMenu = () => {
     const [active, setActive] = useState('pizzaApp');
@@ -13,18 +13,18 @@ const NavMenu = () => {
         <>
             <nav className="navbar">
                 <ul className="nav-list">
-                    <li
+                    <Link to='/'
                         className={`nav-item ${active === 'pizzaApp' ? 'active' : ''}`}
                         onClick={() => handleClick('pizzaApp')}
                     >
                         Pizza App
-                    </li>
-                    <li
+                    </Link>
+                    <Link to="/steps-app"
                         className={`nav-item ${active === 'about' ? 'active' : ''}`}
-                        onClick={() => handleClick('about')}
+                        onClick={() => handleClick('steps')}
                     >
-                        About
-                    </li>
+                       Steps
+                    </Link>
                     <li
                         className={`nav-item ${active === 'services' ? 'active' : ''}`}
                         onClick={() => handleClick('services')}
