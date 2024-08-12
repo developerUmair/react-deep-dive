@@ -6,6 +6,28 @@ const Steps = () => {
   const [step, setStep] = useState(1);
   const [isOpen, setIsOpen] = useState(true);
   // const [test, setTest] = useState({name: 'Syed Umair'});
+  const [noOfDays, setNoOfDays] = useState(0);
+  const [count, setCount] = useState(0);
+
+  const date = new Date();
+  date.setDate(date.getDate() + count);
+
+  const handleAddDays = () => {
+    setNoOfDays((prev) => prev + 1);
+  };
+
+  const handleRemoveDays = () => {
+    setNoOfDays((prev) => prev - 1);
+  };
+
+  const handleIncrement = () => {
+    setCount((prev) => prev + noOfDays);
+
+  };
+
+  const handleDecrement = () => {
+    setCount((prev) => prev - noOfDays);
+  };
 
   const handlePrevious = () => {
     if (step > 1) {
@@ -57,6 +79,23 @@ const Steps = () => {
           </div>
         </div>
       )}
+
+      <div>
+        <h1>Challenge</h1>
+        <button onClick={handleRemoveDays}>-</button> Step: {noOfDays}{" "}
+        <button onClick={handleAddDays}>+</button>
+        <br />
+        <button onClick={handleDecrement}>Minus</button> Count: {count}{" "}
+        <button onClick={handleIncrement}>Plus</button>
+        <h2>
+          {count > 0
+            ? `${count} days from Today is`
+            : count < 0
+            ? `${Math.abs(count)} days ago was`
+            : "Today is"}{" "}
+          {date.toDateString()}
+        </h2>
+      </div>
     </>
   );
 };
