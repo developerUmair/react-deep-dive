@@ -10,7 +10,7 @@ const Steps = () => {
   const [count, setCount] = useState(0);
 
   const date = new Date();
-  date.setDate(date.getDate() + count);
+  date.setDate(date.getDate() + Number(count));
 
   const handleAddDays = () => {
     setNoOfDays((prev) => prev + 1);
@@ -21,12 +21,11 @@ const Steps = () => {
   };
 
   const handleIncrement = () => {
-    setCount((prev) => prev + noOfDays);
-
+    setCount((prev) => prev + Number(noOfDays));
   };
 
   const handleDecrement = () => {
-    setCount((prev) => prev - noOfDays);
+    setCount((prev) => prev - Number(noOfDays));
   };
 
   const handlePrevious = () => {
@@ -43,6 +42,11 @@ const Steps = () => {
 
   const handleToggle = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  const handleReset = () => {
+    setNoOfDays(0);
+    setCount(0);
   };
 
   return (
@@ -82,19 +86,35 @@ const Steps = () => {
 
       <div>
         <h1>Challenge</h1>
-        <button onClick={handleRemoveDays}>-</button> Step: {noOfDays}{" "}
-        <button onClick={handleAddDays}>+</button>
+        {/* <button onClick={handleRemoveDays}>-</button> Step: {noOfDays}{" "} */}
+        <input
+          type="range"
+          min={1}
+          max={10}
+          value={noOfDays}
+          onChange={(e) => setNoOfDays(Number(e.target.value))}
+        />{" "}
+        {noOfDays}
+        {/* <button onClick={handleAddDays}>+</button> */}
         <br />
-        <button onClick={handleDecrement}>Minus</button> Count: {count}{" "}
+        <button onClick={handleDecrement}>Minus</button>{" "}
+        <input
+          type="number"
+          value={count}
+          onChange={(e) => setCount(Number(e.target.value))}
+        />
         <button onClick={handleIncrement}>Plus</button>
         <h2>
           {count > 0
-            ? `${count} days from Today is`
+            ? `${count} days from today is`
             : count < 0
             ? `${Math.abs(count)} days ago was`
             : "Today is"}{" "}
           {date.toDateString()}
         </h2>
+        {noOfDays || count ? (
+          <button onClick={handleReset}>Reset</button>
+        ) : null}
       </div>
     </>
   );
